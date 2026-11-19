@@ -4,8 +4,8 @@ private String Almacenamiento; // 256 GB, 512 GB, 1 TB
     private float Peso; // Kg
 
 
-    public ObjTabletaGrafica(String serial, String marca, float tamaño, float precio, String almacenamiento, float peso) {
-        super(serial, marca, tamaño, precio);
+    public ObjTabletaGrafica(String serial, String marca, float tamano, float precio, String almacenamiento, float peso) {
+        super(serial, marca, tamano, precio);
         Almacenamiento = almacenamiento;
         Peso = peso;
     }
