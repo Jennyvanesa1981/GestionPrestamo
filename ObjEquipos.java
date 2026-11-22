@@ -16,17 +16,25 @@ public abstract class ObjEquipos {
         Precio = precio;
     }
 
+
+    public ObjEquipos() {
+    }
+
+
     public String getSerial() {
         return Serial;
     }
+
 
     public void setSerial(String serial) {
         Serial = serial;
     }
 
+
     public String getMarca() {
         return Marca;
     }
+
 
     public void setMarca(String marca) {
         Marca = marca;
@@ -40,9 +48,11 @@ public abstract class ObjEquipos {
         Tamano = tamano;
     }
 
+
     public float getPrecio() {
         return Precio;
     }
+
 
     public void setPrecio(float precio) {
         Precio = precio;
