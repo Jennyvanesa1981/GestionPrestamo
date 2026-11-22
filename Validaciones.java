@@ -93,4 +93,20 @@ public class Validaciones {
         System.out.println("Error: el telefono debe tener entre 7 y 10 digitos.");
         return leerTelefono(mensaje);
     }
+
+    public String leerNombreApellido(String mensaje) {
+
+    System.out.print(mensaje);
+    String texto = sc.nextLine().trim();
+
+    if (texto.matches("[\\p{L}]+( [\\p{L}]+)*")) {
+        return texto;
+    }
+
+    System.out.println(
+        "Error: solo se permiten letras y espacios, sin numeros ni caracteres especiales."
+    );
+
+    return leerNombreApellido(mensaje);
+}
 }

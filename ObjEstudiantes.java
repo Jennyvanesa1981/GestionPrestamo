@@ -56,11 +56,13 @@ public class ObjEstudiantes {
             return false;
         }
 
-        if (Nombre == null || Nombre.trim().isEmpty()) {
+        if (Nombre == null ||
+                !Nombre.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
             return false;
         }
 
-        if (Apellido == null || Apellido.trim().isEmpty()) {
+        if (Apellido == null ||
+                !Apellido.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
             return false;
         }
 
