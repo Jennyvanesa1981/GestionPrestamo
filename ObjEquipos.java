@@ -1,12 +1,15 @@
-public class ObjEquipos {
+
+public abstract class ObjEquipos {
 
     private String Serial;
     private String Marca;
     private float Tamano;
     private float Precio;
 
-    
-       public ObjEquipos(String serial, String marca, float tamano, float precio) {
+    public ObjEquipos() {
+    }
+
+    public ObjEquipos(String serial, String marca, float tamano, float precio) {
         Serial = serial;
         Marca = marca;
         Tamano = tamano;
@@ -37,11 +40,9 @@ public class ObjEquipos {
         Marca = marca;
     }
 
-
     public float getTamano() {
         return Tamano;
     }
-
 
     public void setTamano(float tamano) {
         Tamano = tamano;
@@ -57,7 +58,28 @@ public class ObjEquipos {
         Precio = precio;
     }
 
-    
-    
-    
+    public abstract String getTipoEquipo();
+
+
+public boolean datosValidos() {
+
+    if (Serial == null || Serial.trim().isEmpty()) {
+        return false;
+    }
+
+    if (Marca == null || Marca.trim().isEmpty()) {
+        return false;
+    }
+
+    if (!Float.isFinite(Tamano) || Tamano <= 0) {
+        return false;
+    }
+
+    if (!Float.isFinite(Precio) || Precio <= 0) {
+        return false;
+    }
+
+    return true;
+}
+
 }

@@ -1,0 +1,38 @@
+
+<project name="GestionPrestamo" default="run" basedir=".">
+
+    <property name="src.dir" value="."/>
+    <property name="build.dir" value="build/classes"/>
+    <property name="main.class" value="Principal"/>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}"
+               destdir="${build.dir}"
+               includeantruntime="false"
+               encoding="UTF-8">
+            <include name="*.java"/>
+        </javac>
+        <echo message="Compilacion realizada correctamente"/>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main.class}"
+              fork="true"
+              failonerror="true">
+            <classpath>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="clean">
+        <delete dir="build"/>
+        <echo message="Archivos compilados eliminados"/>
+    </target>
+
+</project>
+
