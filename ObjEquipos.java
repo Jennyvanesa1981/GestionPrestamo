@@ -1,18 +1,18 @@
-public class ObjEquipos {
+
+public abstract class ObjEquipos {
 
     private String Serial;
     private String Marca;
-    private float Tamaño;
+    private float Tamano;
     private float Precio;
 
-    
     public ObjEquipos() {
     }
 
-    public ObjEquipos(String serial, String marca, float tamaño, float precio) {
+    public ObjEquipos(String serial, String marca, float tamano, float precio) {
         Serial = serial;
         Marca = marca;
-        Tamaño = tamaño;
+        Tamano = tamano;
         Precio = precio;
     }
 
@@ -32,12 +32,12 @@ public class ObjEquipos {
         Marca = marca;
     }
 
-    public float getTamaño() {
-        return Tamaño;
+    public float getTamano() {
+        return Tamano;
     }
 
-    public void setTamaño(float tamaño) {
-        Tamaño = tamaño;
+    public void setTamano(float tamano) {
+        Tamano = tamano;
     }
 
     public float getPrecio() {
@@ -47,5 +47,7 @@ public class ObjEquipos {
     public void setPrecio(float precio) {
         Precio = precio;
     }
-    
+
+    public abstract String getTipoEquipo();
+
 }
