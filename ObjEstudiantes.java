@@ -1,12 +1,14 @@
+
 public class ObjEstudiantes {
 
-     private String Cedula; 
+    private String Cedula;
     private String Nombre;
     private String Apellido;
     private String Telefono;
 
-    
-    public ObjEstudiantes(String cedula, String nombre, String apellido, String telefono) {
+    public ObjEstudiantes(String cedula, String nombre,
+            String apellido, String telefono) {
+
         Cedula = cedula;
         Nombre = nombre;
         Apellido = apellido;
@@ -47,5 +49,25 @@ public class ObjEstudiantes {
     public void setTelefono(String telefono) {
         Telefono = telefono;
     }
-    
+
+    public boolean datosValidos() {
+
+        if (Cedula == null || !Cedula.matches("[0-9]{6,10}")) {
+            return false;
+        }
+
+        if (Nombre == null || Nombre.trim().isEmpty()) {
+            return false;
+        }
+
+        if (Apellido == null || Apellido.trim().isEmpty()) {
+            return false;
+        }
+
+        if (Telefono == null || !Telefono.matches("[0-9]{7,10}")) {
+            return false;
+        }
+
+        return true;
+    }
 }

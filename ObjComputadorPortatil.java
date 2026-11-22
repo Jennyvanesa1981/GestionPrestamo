@@ -32,4 +32,22 @@ public class ObjComputadorPortatil extends ObjEquipos {
     public String getTipoEquipo() {
         return "Computador Portatil";
     }
+
+    @Override
+    public boolean datosValidos() {
+
+        if (!super.datosValidos()) {
+            return false;
+        }
+
+        if (SistemaOperativo == null || SistemaOperativo.trim().isEmpty()) {
+            return false;
+        }
+
+        if (Procesador == null || Procesador.trim().isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -50,4 +50,26 @@ public abstract class ObjEquipos {
 
     public abstract String getTipoEquipo();
 
+
+public boolean datosValidos() {
+
+    if (Serial == null || Serial.trim().isEmpty()) {
+        return false;
+    }
+
+    if (Marca == null || Marca.trim().isEmpty()) {
+        return false;
+    }
+
+    if (!Float.isFinite(Tamano) || Tamano <= 0) {
+        return false;
+    }
+
+    if (!Float.isFinite(Precio) || Precio <= 0) {
+        return false;
+    }
+
+    return true;
+}
+
 }

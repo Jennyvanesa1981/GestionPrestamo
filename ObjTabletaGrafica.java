@@ -32,4 +32,22 @@ public class ObjTabletaGrafica extends ObjEquipos {
     public String getTipoEquipo() {
         return "Tableta Grafica";
     }
+
+    @Override
+    public boolean datosValidos() {
+
+        if (!super.datosValidos()) {
+            return false;
+        }
+
+        if (Almacenamiento == null || Almacenamiento.trim().isEmpty()) {
+            return false;
+        }
+
+        if (!Float.isFinite(Peso) || Peso <= 0) {
+            return false;
+        }
+
+        return true;
+    }
 }

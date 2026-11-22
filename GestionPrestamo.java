@@ -1,11 +1,11 @@
 
-
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class GestionPrestamo {
 
     private Scanner sc;
+    private Validaciones validaciones;
 
     private ArrayList<ObjEstudiantesIngenieria> estudiantesIngenieria;
     private ArrayList<ObjEstudianteDiseno> estudiantesDiseno;
@@ -14,6 +14,7 @@ public class GestionPrestamo {
     public GestionPrestamo() {
 
         this.sc = new Scanner(System.in);
+        this.validaciones = new Validaciones(sc);
 
         estudiantesIngenieria = new ArrayList<>();
         estudiantesDiseno = new ArrayList<>();
@@ -31,9 +32,10 @@ public class GestionPrestamo {
             System.out.println("2. Estudiantes de Diseno");
             System.out.println("3. Imprimir inventario total");
             System.out.println("4. Salir del programa");
-            System.out.print("Seleccione una opcion: ");
 
-            opcion = sc.nextInt();
+            opcion = validaciones.leerEntero(
+                "Seleccione una opcion: ", 1, 4
+            );
 
             switch (opcion) {
 
@@ -74,9 +76,10 @@ public class GestionPrestamo {
             System.out.println("3. Devolucion de equipo");
             System.out.println("4. Buscar equipo");
             System.out.println("5. Volver al menu principal");
-            System.out.print("Seleccione una opcion: ");
 
-            opcion = sc.nextInt();
+            opcion = validaciones.leerEntero(
+                "Seleccione una opcion: ", 1, 5
+            );
 
             switch (opcion) {
 
@@ -121,9 +124,10 @@ public class GestionPrestamo {
             System.out.println("3. Devolucion de equipo");
             System.out.println("4. Buscar equipo");
             System.out.println("5. Volver al menu principal");
-            System.out.print("Seleccione una opcion: ");
 
-            opcion = sc.nextInt();
+            opcion = validaciones.leerEntero(
+                "Seleccione una opcion: ", 1, 5
+            );
 
             switch (opcion) {
 
@@ -157,25 +161,46 @@ public class GestionPrestamo {
         return true;
     }
 
-    // Metodo para agregar diferentes tipos de equipos
-    public void registrarEquipoInventario(ObjEquipos equipo) {
+    public boolean registrarEquipoInventario(ObjEquipos equipo) {
 
-        if (equipo != null) {
-            inventarioEquipos.add(equipo);
-            System.out.println("Equipo agregado al inventario");
-        } else {
-            System.out.println("No se puede registrar un equipo vacio");
+        if (equipo == null || !equipo.datosValidos()) {
+
+            System.out.println(
+                "No se puede registrar un equipo con datos invalidos"
+            );
+
+            return false;
         }
+
+        for (ObjEquipos registrado : inventarioEquipos) {
+
+            if (registrado.getSerial().equalsIgnoreCase(
+                    equipo.getSerial())) {
+
+                System.out.println(
+                    "Ya existe un equipo con ese serial"
+                );
+
+                return false;
+            }
+        }
+
+        inventarioEquipos.add(equipo);
+
+        System.out.println("Equipo agregado al inventario");
+
+        return true;
     }
 
-    // Metodo que demuestra el polimorfismo
-    public void imprimirInventario() {
+    public boolean imprimirInventario() {
 
         System.out.println("\nINVENTARIO TOTAL");
 
         if (inventarioEquipos.isEmpty()) {
+
             System.out.println("No hay equipos registrados");
-            return;
+
+            return false;
         }
 
         for (ObjEquipos equipo : inventarioEquipos) {
@@ -189,6 +214,52 @@ public class GestionPrestamo {
         }
 
         System.out.println("-------------------------");
-        System.out.println("Total de equipos: " + inventarioEquipos.size());
+
+        System.out.println(
+            "Total de equipos: " + inventarioEquipos.size()
+        );
+
+        return true;
     }
+
+public boolean registrarEstudianteIngenieria(ObjEstudiantesIngenieria estudiante) {
+
+    if (estudiante == null || !estudiante.datosValidos()) {
+        System.out.println("Datos invalidos del estudiante de Ingenieria");
+        return false;
+    }
+
+    for (ObjEstudiantesIngenieria registrado : estudiantesIngenieria) {
+
+        if (registrado.getCedula().equals(estudiante.getCedula())) {
+            System.out.println("La cedula ya esta registrada");
+            return false;
+        }
+    }
+
+    estudiantesIngenieria.add(estudiante);
+    System.out.println("Estudiante de Ingenieria registrado");
+    return true;
+}
+
+public boolean registrarEstudianteDiseno(ObjEstudianteDiseno estudiante) {
+
+    if (estudiante == null || !estudiante.datosValidos()) {
+        System.out.println("Datos invalidos del estudiante de Diseno");
+        return false;
+    }
+
+    for (ObjEstudianteDiseno registrado : estudiantesDiseno) {
+
+        if (registrado.getCedula().equals(estudiante.getCedula())) {
+            System.out.println("La cedula ya esta registrada");
+            return false;
+        }
+    }
+
+    estudiantesDiseno.add(estudiante);
+    System.out.println("Estudiante de Diseno registrado");
+    return true;
+}
+
 }
