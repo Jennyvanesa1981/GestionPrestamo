@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -7,18 +6,20 @@ public class GestionPrestamo {
     private Scanner sc;
     private Validaciones validaciones;
 
-    private ArrayList<ObjEstudiantesIngenieria> estudiantesIngenieria;
-    private ArrayList<ObjEstudianteDiseno> estudiantesDiseno;
-    private ArrayList<ObjEquipos> inventarioEquipos;
+    private ArrayList<ObjEstudiantesIngenieria> ingenieros;
+    private ArrayList<ObjEstudianteDiseno> disenadores;
+    private ArrayList<ObjComputadorPortatil> portatil;
+    private ArrayList<ObjTabletaGrafica> tableta;
 
     public GestionPrestamo() {
 
         this.sc = new Scanner(System.in);
         this.validaciones = new Validaciones(sc);
 
-        estudiantesIngenieria = new ArrayList<>();
-        estudiantesDiseno = new ArrayList<>();
-        inventarioEquipos = new ArrayList<>();
+        ingenieros = new ArrayList<>();
+        disenadores = new ArrayList<>();
+        portatil = new ArrayList<>();
+        tableta = new ArrayList<>();
     }
 
     public boolean mostrarMenuPrincipal() {
@@ -285,7 +286,13 @@ public class GestionPrestamo {
             return false;
         }
 
-        estudiantesIngenieria.add(estudiante);
+        if (serialAsignado(estudiante.getSerialEquipo())) {
+
+            System.out.println("El serial ya esta asignado a otro estudiante");
+            return false;
+        }
+
+        ingenieros.add(estudiante);
 
         System.out.println(
             "Estudiante de Ingenieria registrado correctamente"
@@ -312,7 +319,13 @@ public class GestionPrestamo {
             return false;
         }
 
-        estudiantesDiseno.add(estudiante);
+        if (serialAsignado(String.valueOf(estudiante.getSerialEquipo()))) {
+
+            System.out.println("El serial ya esta asignado a otro estudiante");
+            return false;
+        }
+
+        disenadores.add(estudiante);
 
         System.out.println(
             "Estudiante de Diseno registrado correctamente"
@@ -327,18 +340,40 @@ public class GestionPrestamo {
             return false;
         }
 
-        for (ObjEstudiantesIngenieria estudiante :
-                estudiantesIngenieria) {
+        for (ObjEstudiantesIngenieria estudiante : ingenieros) {
 
             if (estudiante.getCedula().equals(cedula)) {
                 return true;
             }
         }
 
-        for (ObjEstudianteDiseno estudiante :
-                estudiantesDiseno) {
+        for (ObjEstudianteDiseno estudiante : disenadores) {
 
             if (estudiante.getCedula().equals(cedula)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean serialAsignado(String serial) {
+
+        if (serial == null) {
+            return false;
+        }
+
+        for (ObjEstudiantesIngenieria estudiante : ingenieros) {
+
+            if (estudiante.getSerialEquipo().equalsIgnoreCase(serial)) {
+                return true;
+            }
+        }
+
+        for (ObjEstudianteDiseno estudiante : disenadores) {
+
+            if (String.valueOf(estudiante.getSerialEquipo())
+                    .equalsIgnoreCase(serial)) {
                 return true;
             }
         }
@@ -357,7 +392,7 @@ public class GestionPrestamo {
             return false;
         }
 
-        for (ObjEquipos registrado : inventarioEquipos) {
+        for (ObjComputadorPortatil registrado : portatil) {
 
             if (registrado.getSerial().equalsIgnoreCase(
                     equipo.getSerial())) {
@@ -370,9 +405,75 @@ public class GestionPrestamo {
             }
         }
 
-        inventarioEquipos.add(equipo);
+        for (ObjTabletaGrafica registrado : tableta) {
 
-        System.out.println("Equipo agregado al inventario");
+            if (registrado.getSerial().equalsIgnoreCase(
+                    equipo.getSerial())) {
+
+                System.out.println(
+                    "Ya existe un equipo con ese serial"
+                );
+
+                return false;
+            }
+        }
+
+        if (equipo instanceof ObjComputadorPortatil) {
+
+            portatil.add((ObjComputadorPortatil) equipo);
+            System.out.println("Computador portatil agregado al inventario");
+            return true;
+        }
+
+        if (equipo instanceof ObjTabletaGrafica) {
+
+            tableta.add((ObjTabletaGrafica) equipo);
+            System.out.println("Tableta grafica agregada al inventario");
+            return true;
+        }
+
+        System.out.println("Tipo de equipo no soportado");
+        return false;
+    }
+
+    public boolean eliminarEstudianteIngenieria(int posicion) {
+
+        if (posicion < 0 || posicion >= ingenieros.size()) {
+            return false;
+        }
+
+        String serial = ingenieros.get(posicion).getSerialEquipo();
+        ingenieros.remove(posicion);
+
+        for (int i = 0; i < portatil.size(); i++) {
+
+            if (portatil.get(i).getSerial().equalsIgnoreCase(serial)) {
+                portatil.remove(i);
+                break;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean eliminarEstudianteDiseno(int posicion) {
+
+        if (posicion < 0 || posicion >= disenadores.size()) {
+            return false;
+        }
+
+        String serial = String.valueOf(
+            disenadores.get(posicion).getSerialEquipo()
+        );
+        disenadores.remove(posicion);
+
+        for (int i = 0; i < tableta.size(); i++) {
+
+            if (tableta.get(i).getSerial().equalsIgnoreCase(serial)) {
+                tableta.remove(i);
+                break;
+            }
+        }
 
         return true;
     }
@@ -381,28 +482,102 @@ public class GestionPrestamo {
 
         System.out.println("\nINVENTARIO TOTAL");
 
-        if (inventarioEquipos.isEmpty()) {
+        if (ingenieros.isEmpty() && disenadores.isEmpty()
+                && portatil.isEmpty() && tableta.isEmpty()) {
 
-            System.out.println("No hay equipos registrados");
-
+            System.out.println("No hay registros en el inventario");
             return false;
         }
 
-        for (ObjEquipos equipo : inventarioEquipos) {
+        System.out.println("\nESTUDIANTES DE INGENIERIA");
+
+        if (ingenieros.isEmpty()) {
+
+            System.out.println("No hay estudiantes de Ingenieria registrados");
+        } else {
+
+            for (ObjEstudiantesIngenieria estudiante : ingenieros) {
+
+                System.out.println("-------------------------");
+                System.out.println("Cedula: " + estudiante.getCedula());
+                System.out.println("Nombre: " + estudiante.getNombre() + " " + estudiante.getApellido());
+                System.out.println("Telefono: " + estudiante.getTelefono());
+                System.out.println("Semestre: " + estudiante.getNumeroSemestre());
+                System.out.println("Promedio: " + estudiante.getPromedioAcumulado());
+                System.out.println("Serial equipo: " + estudiante.getSerialEquipo());
+            }
 
             System.out.println("-------------------------");
-            System.out.println("Tipo: " + equipo.getTipoEquipo());
-            System.out.println("Serial: " + equipo.getSerial());
-            System.out.println("Marca: " + equipo.getMarca());
-            System.out.println("Tamano: " + equipo.getTamano());
-            System.out.println("Precio: " + equipo.getPrecio());
+            System.out.println("Total ingenieros: " + ingenieros.size());
         }
 
-        System.out.println("-------------------------");
+        System.out.println("\nESTUDIANTES DE DISENO");
 
-        System.out.println(
-            "Total de equipos: " + inventarioEquipos.size()
-        );
+        if (disenadores.isEmpty()) {
+
+            System.out.println("No hay estudiantes de Diseno registrados");
+        } else {
+
+            for (ObjEstudianteDiseno estudiante : disenadores) {
+
+                System.out.println("-------------------------");
+                System.out.println("Cedula: " + estudiante.getCedula());
+                System.out.println("Nombre: " + estudiante.getNombre() + " " + estudiante.getApellido());
+                System.out.println("Telefono: " + estudiante.getTelefono());
+                System.out.println("Modalidad: " + estudiante.getModalidadEstudio());
+                System.out.println("Asignaturas: " + estudiante.getCantidadAsignaturas());
+                System.out.println("Serial equipo: " + estudiante.getSerialEquipo());
+            }
+
+            System.out.println("-------------------------");
+            System.out.println("Total disenadores: " + disenadores.size());
+        }
+
+        System.out.println("\nCOMPUTADORES PORTATILES");
+
+        if (portatil.isEmpty()) {
+
+            System.out.println("No hay computadores portatiles registrados");
+        } else {
+
+            for (ObjComputadorPortatil equipo : portatil) {
+
+                System.out.println("-------------------------");
+                System.out.println("Tipo: " + equipo.getTipoEquipo());
+                System.out.println("Serial: " + equipo.getSerial());
+                System.out.println("Marca: " + equipo.getMarca());
+                System.out.println("Tamano: " + equipo.getTamano());
+                System.out.println("Precio: " + equipo.getPrecio());
+                System.out.println("Sistema operativo: " + equipo.getSistemaOperativo());
+                System.out.println("Procesador: " + equipo.getProcesador());
+            }
+
+            System.out.println("-------------------------");
+            System.out.println("Total portatiles: " + portatil.size());
+        }
+
+        System.out.println("\nTABLETAS GRAFICAS");
+
+        if (tableta.isEmpty()) {
+
+            System.out.println("No hay tabletas graficas registradas");
+        } else {
+
+            for (ObjTabletaGrafica equipo : tableta) {
+
+                System.out.println("-------------------------");
+                System.out.println("Tipo: " + equipo.getTipoEquipo());
+                System.out.println("Serial: " + equipo.getSerial());
+                System.out.println("Marca: " + equipo.getMarca());
+                System.out.println("Tamano: " + equipo.getTamano());
+                System.out.println("Precio: " + equipo.getPrecio());
+                System.out.println("Almacenamiento: " + equipo.getAlmacenamiento());
+                System.out.println("Peso: " + equipo.getPeso());
+            }
+
+            System.out.println("-------------------------");
+            System.out.println("Total tabletas: " + tableta.size());
+        }
 
         return true;
     }

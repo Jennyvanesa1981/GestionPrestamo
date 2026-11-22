@@ -5,10 +5,7 @@ public abstract class ObjEquipos {
     private String Marca;
     private float Tamano;
     private float Precio;
-
-    public ObjEquipos() {
-    }
-
+    
     public ObjEquipos(String serial, String marca, float tamano, float precio) {
         Serial = serial;
         Marca = marca;
