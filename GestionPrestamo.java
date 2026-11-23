@@ -242,12 +242,12 @@ public boolean menuIngenieria() {
 
         int serial = validaciones.leerEntero(
             "Ingrese serial numerico del equipo: ",
-            1, Integer.MAX_VALUE
-        );
+            1, Integer.MAX_VALUE);
 
         String serialReal = validaciones.leerTexto(
         "Ingrese serial real del equipo: ");
-
+            
+            
             if (!relacionarSerialDiseno(serial, serialReal)) {
         return false;
         }
@@ -256,8 +256,8 @@ public boolean menuIngenieria() {
         ObjEstudianteDiseno estudiante =
             new ObjEstudianteDiseno(
                 cedula, nombre, apellido, telefono,
-                modalidad, asignaturas, serial
-            );
+                modalidad, asignaturas, serial);
+
             boolean registrado = registrarEstudianteDiseno(estudiante);
             if (!registrado) {
                 serialesDiseno.remove(serial);
@@ -307,14 +307,21 @@ public boolean registrarEstudianteIngenieria(
         }
     }
 
-    for (ObjEstudianteDiseno registrado : estudiantesDiseno) {
-        if (prestamosActivos.contains(registrado.getCedula())
-                && String.valueOf(registrado.getSerialEquipo())
-                    .equalsIgnoreCase(estudiante.getSerialEquipo())) {
-            equipoPrestado = true;
-            break;
-        }
+   for (ObjEstudianteDiseno registrado : estudiantesDiseno) {
+
+    String serialReal = serialesDiseno.get(
+        registrado.getSerialEquipo()
+    );
+
+    if (prestamosActivos.contains(registrado.getCedula())
+            && serialReal != null
+            && serialReal.equalsIgnoreCase(
+                estudiante.getSerialEquipo())) {
+
+        equipoPrestado = true;
+        break;
     }
+}
 
     if (equipoPrestado) {
         System.out.println("El equipo ya se encuentra prestado");
@@ -772,13 +779,12 @@ public ObjEstudiantes buscarPrestamoActivo(
 }
 
 
-    
 public boolean modificarPrestamo(boolean ingenieria) {
 
     System.out.println("\nMODIFICAR PRESTAMO");
 
     String dato = validaciones.leerTexto(
-        "Ingrese cedula o serial actual: "
+        "Ingrese cedula o serial del equipo: "
     );
 
     ObjEstudiantes estudiante = buscarPrestamoActivo(
@@ -790,124 +796,60 @@ public boolean modificarPrestamo(boolean ingenieria) {
         return false;
     }
 
-    if (ingenieria) {
+    int opcion;
 
-        String nuevoSerial = validaciones.leerTexto(
-            "Ingrese nuevo serial del equipo: "
+    do {
+        System.out.println("\nDATOS QUE PUEDE MODIFICAR");
+        System.out.println("1. Nombre");
+        System.out.println("2. Apellido");
+        System.out.println("3. Telefono");
+        System.out.println("4. Volver");
+
+        opcion = validaciones.leerEntero(
+            "Seleccione una opcion: ", 1, 4
         );
 
-        boolean equipoExiste = false;
+        switch (opcion) {
 
-        for (ObjEquipos equipo : inventarioEquipos) {
-            if (equipo.getSerial().equalsIgnoreCase(nuevoSerial)) {
-                equipoExiste = true;
-                break;
-            }
-        }
-
-        if (!equipoExiste) {
-            System.out.println("El equipo no existe en el inventario");
-            return false;
-        }
-
-        for (ObjEstudiantesIngenieria registrado : estudiantesIngenieria) {
-
-            if (prestamosActivos.contains(registrado.getCedula())
-                    && !registrado.getCedula().equals(estudiante.getCedula())
-                    && registrado.getSerialEquipo().equalsIgnoreCase(nuevoSerial)) {
-
-                System.out.println("El equipo ya se encuentra prestado");
-                return false;
-            }
-        }
-
-        for (ObjEstudianteDiseno registrado : estudiantesDiseno) {
-
-            if (prestamosActivos.contains(registrado.getCedula())
-                    && !registrado.getCedula().equals(estudiante.getCedula())) {
-
-                String otroSerial = serialesDiseno.get(
-                    registrado.getSerialEquipo()
+            case 1:
+                String nombre = validaciones.leerNombreApellido(
+                    "Ingrese el nuevo nombre: "
                 );
 
-                if (otroSerial != null
-                        && otroSerial.equalsIgnoreCase(nuevoSerial)) {
-
-                    System.out.println("El equipo ya se encuentra prestado");
-                    return false;
-                }
-            }
-        }
-
-        ((ObjEstudiantesIngenieria) estudiante).setSerialEquipo(nuevoSerial);
-
-    } else {
-
-        int nuevoSerial = validaciones.leerEntero(
-            "Ingrese nuevo serial numerico: ",
-            1, Integer.MAX_VALUE
-        );
-
-        String serialReal = serialesDiseno.get(nuevoSerial);
-
-        if (serialReal == null) {
-            System.out.println(
-                "El serial numerico no tiene un equipo relacionado"
-            );
-            return false;
-        }
-
-        boolean equipoExiste = false;
-
-        for (ObjEquipos equipo : inventarioEquipos) {
-            if (equipo.getSerial().equalsIgnoreCase(serialReal)) {
-                equipoExiste = true;
+                estudiante.setNombre(nombre);
+                System.out.println("Nombre actualizado correctamente");
                 break;
-            }
-        }
 
-        if (!equipoExiste) {
-            System.out.println("El equipo no existe en el inventario");
-            return false;
-        }
-
-        for (ObjEstudiantesIngenieria registrado : estudiantesIngenieria) {
-
-            if (prestamosActivos.contains(registrado.getCedula())
-                    && !registrado.getCedula().equals(estudiante.getCedula())
-                    && registrado.getSerialEquipo().equalsIgnoreCase(serialReal)) {
-
-                System.out.println("El equipo ya se encuentra prestado");
-                return false;
-            }
-        }
-
-        for (ObjEstudianteDiseno registrado : estudiantesDiseno) {
-
-            if (prestamosActivos.contains(registrado.getCedula())
-                    && !registrado.getCedula().equals(estudiante.getCedula())) {
-
-                String otroSerial = serialesDiseno.get(
-                    registrado.getSerialEquipo()
+            case 2:
+                String apellido = validaciones.leerNombreApellido(
+                    "Ingrese el nuevo apellido: "
                 );
 
-                if (otroSerial != null
-                        && otroSerial.equalsIgnoreCase(serialReal)) {
+                estudiante.setApellido(apellido);
+                System.out.println("Apellido actualizado correctamente");
+                break;
 
-                    System.out.println("El equipo ya se encuentra prestado");
-                    return false;
-                }
-            }
+            case 3:
+                String telefono = validaciones.leerTelefono(
+                    "Ingrese el nuevo telefono: "
+                );
+
+                estudiante.setTelefono(telefono);
+                System.out.println("Telefono actualizado correctamente");
+                break;
+
+            case 4:
+                System.out.println("Finalizando modificacion");
+                break;
         }
 
-        ((ObjEstudianteDiseno) estudiante).setSerialEquipo(nuevoSerial);
-    }
+    } while (opcion != 4);
 
-    System.out.println("Prestamo modificado correctamente");
     return true;
 }
 
-   
+
+
 public boolean devolverEquipo(boolean ingenieria) {
 
     System.out.println("\nDEVOLUCION DE EQUIPO");
@@ -921,27 +863,42 @@ public boolean devolverEquipo(boolean ingenieria) {
     );
 
     if (estudiante == null) {
-        System.out.println(
-            "No se encontro un prestamo activo con esos datos"
-        );
+        System.out.println("No se encontro un prestamo activo");
         return false;
     }
 
-    boolean devolucionRegistrada = prestamosActivos.remove(
-        estudiante.getCedula()
-    );
+    String cedula = estudiante.getCedula();
 
-    if (!devolucionRegistrada) {
-        System.out.println(
-            "El equipo ya fue devuelto o no tiene un prestamo activo"
+    boolean eliminado;
+
+    if (ingenieria) {
+
+        eliminado = estudiantesIngenieria.remove(
+            (ObjEstudiantesIngenieria) estudiante
         );
+
+    } else {
+
+        ObjEstudianteDiseno estudianteDiseno =
+            (ObjEstudianteDiseno) estudiante;
+
+        eliminado = estudiantesDiseno.remove(estudianteDiseno);
+
+        if (eliminado) {
+            serialesDiseno.remove(estudianteDiseno.getSerialEquipo());
+        }
+    }
+
+    if (!eliminado) {
+        System.out.println("No se pudo eliminar el registro del prestamo");
         return false;
     }
+
+    prestamosActivos.remove(cedula);
 
     System.out.println("Devolucion registrada correctamente");
-    System.out.println("Cedula: " + estudiante.getCedula());
-    System.out.println("Nombre: " + estudiante.getNombre());
-    System.out.println("Apellido: " + estudiante.getApellido());
+    System.out.println("Cedula: " + cedula);
+    System.out.println("El registro del prestamo fue eliminado");
     System.out.println("El equipo vuelve a estar disponible");
 
     return true;
