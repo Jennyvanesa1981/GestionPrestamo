@@ -12,7 +12,6 @@ public class GestionPrestamo {
     private ArrayList<ObjEquipos> inventarioEquipos;
 
     public GestionPrestamo() {
-
         this.sc = new Scanner(System.in);
         this.validaciones = new Validaciones(sc);
 
@@ -32,13 +31,13 @@ public class GestionPrestamo {
             System.out.println("2. Estudiantes de Diseno");
             System.out.println("3. Imprimir inventario total");
             System.out.println("4. Salir del programa");
+            System.out.println("5. Registrar equipos electronicos");
 
             opcion = validaciones.leerEntero(
-                "Seleccione una opcion: ", 1, 4
+                "Seleccione una opcion: ", 1, 5
             );
 
             switch (opcion) {
-
                 case 1:
                     menuIngenieria();
                     break;
@@ -53,6 +52,10 @@ public class GestionPrestamo {
 
                 case 4:
                     System.out.println("Saliendo del programa");
+                    break;
+
+                case 5:
+                    menuEquipos();
                     break;
 
                 default:
@@ -82,7 +85,6 @@ public class GestionPrestamo {
             );
 
             switch (opcion) {
-
                 case 1:
                     ingresarEstudianteIngenieria();
                     break;
@@ -130,7 +132,6 @@ public class GestionPrestamo {
             );
 
             switch (opcion) {
-
                 case 1:
                     ingresarEstudianteDiseno();
                     break;
@@ -195,13 +196,8 @@ public class GestionPrestamo {
 
         ObjEstudiantesIngenieria estudiante =
             new ObjEstudiantesIngenieria(
-                cedula,
-                nombre,
-                apellido,
-                telefono,
-                semestre,
-                promedio,
-                serial
+                cedula, nombre, apellido, telefono,
+                semestre, promedio, serial
             );
 
         return registrarEstudianteIngenieria(estudiante);
@@ -249,19 +245,13 @@ public class GestionPrestamo {
 
         int serial = validaciones.leerEntero(
             "Ingrese serial numerico del equipo: ",
-            1,
-            Integer.MAX_VALUE
+            1, Integer.MAX_VALUE
         );
 
         ObjEstudianteDiseno estudiante =
             new ObjEstudianteDiseno(
-                cedula,
-                nombre,
-                apellido,
-                telefono,
-                modalidad,
-                asignaturas,
-                serial
+                cedula, nombre, apellido, telefono,
+                modalidad, asignaturas, serial
             );
 
         return registrarEstudianteDiseno(estudiante);
@@ -271,16 +261,13 @@ public class GestionPrestamo {
             ObjEstudiantesIngenieria estudiante) {
 
         if (estudiante == null || !estudiante.datosValidos()) {
-
             System.out.println(
                 "Datos invalidos del estudiante de Ingenieria"
             );
-
             return false;
         }
 
         if (cedulaRegistrada(estudiante.getCedula())) {
-
             System.out.println("La cedula ya esta registrada");
             return false;
         }
@@ -298,16 +285,13 @@ public class GestionPrestamo {
             ObjEstudianteDiseno estudiante) {
 
         if (estudiante == null || !estudiante.datosValidos()) {
-
             System.out.println(
                 "Datos invalidos del estudiante de Diseno"
             );
-
             return false;
         }
 
         if (cedulaRegistrada(estudiante.getCedula())) {
-
             System.out.println("La cedula ya esta registrada");
             return false;
         }
@@ -344,6 +328,203 @@ public class GestionPrestamo {
         }
 
         return false;
+    }
+
+    public boolean menuEquipos() {
+
+        int opcion;
+
+        do {
+            System.out.println("\nMENU DE EQUIPOS ELECTRONICOS");
+            System.out.println("1. Registrar Computador Portatil");
+            System.out.println("2. Registrar Tableta Grafica");
+            System.out.println("3. Imprimir inventario");
+            System.out.println("4. Volver al menu principal");
+
+            opcion = validaciones.leerEntero(
+                "Seleccione una opcion: ", 1, 4
+            );
+
+            switch (opcion) {
+                case 1:
+                    ingresarComputadorPortatil();
+                    break;
+
+                case 2:
+                    ingresarTabletaGrafica();
+                    break;
+
+                case 3:
+                    imprimirInventario();
+                    break;
+
+                case 4:
+                    System.out.println("Volviendo al menu principal");
+                    break;
+
+                default:
+                    System.out.println("Opcion incorrecta");
+                    break;
+            }
+
+        } while (opcion != 4);
+
+        return true;
+    }
+
+    public String seleccionarSistemaOperativo() {
+
+        System.out.println("\nSISTEMA OPERATIVO");
+        System.out.println("1. Windows 7");
+        System.out.println("2. Windows 10");
+        System.out.println("3. Windows 11");
+
+        int opcion = validaciones.leerEntero(
+            "Seleccione sistema operativo: ", 1, 3
+        );
+
+        switch (opcion) {
+            case 1:
+                return "Windows 7";
+
+            case 2:
+                return "Windows 10";
+
+            case 3:
+                return "Windows 11";
+
+            default:
+                return "";
+        }
+    }
+
+    public String seleccionarProcesador() {
+
+        System.out.println("\nPROCESADOR");
+        System.out.println("1. AMD Ryzen");
+        System.out.println("2. Intel Core i5");
+
+        int opcion = validaciones.leerEntero(
+            "Seleccione procesador: ", 1, 2
+        );
+
+        switch (opcion) {
+            case 1:
+                return "AMD Ryzen";
+
+            case 2:
+                return "Intel Core i5";
+
+            default:
+                return "";
+        }
+    }
+
+    public String seleccionarAlmacenamiento() {
+
+        System.out.println("\nALMACENAMIENTO");
+        System.out.println("1. 256 GB");
+        System.out.println("2. 512 GB");
+        System.out.println("3. 1 TB");
+
+        int opcion = validaciones.leerEntero(
+            "Seleccione almacenamiento: ", 1, 3
+        );
+
+        switch (opcion) {
+            case 1:
+                return "256 GB";
+
+            case 2:
+                return "512 GB";
+
+            case 3:
+                return "1 TB";
+
+            default:
+                return "";
+        }
+    }
+
+    public boolean ingresarComputadorPortatil() {
+
+        System.out.println("\nREGISTRO DE COMPUTADOR PORTATIL");
+
+        String serial = validaciones.leerNombreApellido(
+            "Ingrese serial solo con letras: "
+        );
+
+        String marca = validaciones.leerNombreApellido(
+            "Ingrese marca: "
+        );
+
+        float tamano = validaciones.leerDecimal(
+            "Ingrese tamano en pulgadas: ",
+            0.01f, Float.MAX_VALUE
+        );
+
+        float precio = validaciones.leerDecimal(
+            "Ingrese precio: ",
+            0.01f, Float.MAX_VALUE
+        );
+
+        String sistemaOperativo = seleccionarSistemaOperativo();
+
+        String procesador = seleccionarProcesador();
+
+        ObjComputadorPortatil computador =
+            new ObjComputadorPortatil(
+                serial,
+                marca,
+                tamano,
+                precio,
+                sistemaOperativo,
+                procesador
+            );
+
+        return registrarEquipoInventario(computador);
+    }
+
+    public boolean ingresarTabletaGrafica() {
+
+        System.out.println("\nREGISTRO DE TABLETA GRAFICA");
+
+        String serial = validaciones.leerNombreApellido(
+            "Ingrese serial solo con letras: "
+        );
+
+        String marca = validaciones.leerNombreApellido(
+            "Ingrese marca: "
+        );
+
+        float tamano = validaciones.leerDecimal(
+            "Ingrese tamano en pulgadas: ",
+            0.01f, Float.MAX_VALUE
+        );
+
+        float precio = validaciones.leerDecimal(
+            "Ingrese precio: ",
+            0.01f, Float.MAX_VALUE
+        );
+
+        String almacenamiento = seleccionarAlmacenamiento();
+
+        float peso = validaciones.leerDecimal(
+            "Ingrese peso en kilogramos: ",
+            0.01f, Float.MAX_VALUE
+        );
+
+        ObjTabletaGrafica tableta =
+            new ObjTabletaGrafica(
+                serial,
+                marca,
+                tamano,
+                precio,
+                almacenamiento,
+                peso
+            );
+
+        return registrarEquipoInventario(tableta);
     }
 
     public boolean registrarEquipoInventario(ObjEquipos equipo) {
@@ -396,10 +577,39 @@ public class GestionPrestamo {
             System.out.println("Marca: " + equipo.getMarca());
             System.out.println("Tamano: " + equipo.getTamano());
             System.out.println("Precio: " + equipo.getPrecio());
+
+            if (equipo instanceof ObjComputadorPortatil) {
+
+                ObjComputadorPortatil computador =
+                    (ObjComputadorPortatil) equipo;
+
+                System.out.println(
+                    "Sistema operativo: " +
+                    computador.getSistemaOperativo()
+                );
+
+                System.out.println(
+                    "Procesador: " +
+                    computador.getProcesador()
+                );
+
+            } else if (equipo instanceof ObjTabletaGrafica) {
+
+                ObjTabletaGrafica tableta =
+                    (ObjTabletaGrafica) equipo;
+
+                System.out.println(
+                    "Almacenamiento: " +
+                    tableta.getAlmacenamiento()
+                );
+
+                System.out.println(
+                    "Peso: " + tableta.getPeso() + " kg"
+                );
+            }
         }
 
         System.out.println("-------------------------");
-
         System.out.println(
             "Total de equipos: " + inventarioEquipos.size()
         );

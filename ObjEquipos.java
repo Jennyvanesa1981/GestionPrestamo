@@ -16,25 +16,17 @@ public abstract class ObjEquipos {
         Precio = precio;
     }
 
-
-    public ObjEquipos() {
-    }
-
-
     public String getSerial() {
         return Serial;
     }
-
 
     public void setSerial(String serial) {
         Serial = serial;
     }
 
-
     public String getMarca() {
         return Marca;
     }
-
 
     public void setMarca(String marca) {
         Marca = marca;
@@ -48,11 +40,9 @@ public abstract class ObjEquipos {
         Tamano = tamano;
     }
 
-
     public float getPrecio() {
         return Precio;
     }
-
 
     public void setPrecio(float precio) {
         Precio = precio;
@@ -60,26 +50,26 @@ public abstract class ObjEquipos {
 
     public abstract String getTipoEquipo();
 
+    public boolean datosValidos() {
 
-public boolean datosValidos() {
+        if (Serial == null ||
+                !Serial.trim().matches("[\\p{L}]+")) {
+            return false;
+        }
 
-    if (Serial == null || Serial.trim().isEmpty()) {
-        return false;
+        if (Marca == null ||
+                !Marca.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
+            return false;
+        }
+
+        if (!Float.isFinite(Tamano) || Tamano <= 0) {
+            return false;
+        }
+
+        if (!Float.isFinite(Precio) || Precio <= 0) {
+            return false;
+        }
+
+        return true;
     }
-
-    if (Marca == null || Marca.trim().isEmpty()) {
-        return false;
-    }
-
-    if (!Float.isFinite(Tamano) || Tamano <= 0) {
-        return false;
-    }
-
-    if (!Float.isFinite(Precio) || Precio <= 0) {
-        return false;
-    }
-
-    return true;
-}
-
 }

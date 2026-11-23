@@ -40,11 +40,26 @@ public class ObjComputadorPortatil extends ObjEquipos {
             return false;
         }
 
-        if (SistemaOperativo == null || SistemaOperativo.trim().isEmpty()) {
+        if (SistemaOperativo == null) {
             return false;
         }
 
-        if (Procesador == null || Procesador.trim().isEmpty()) {
+        String sistema = SistemaOperativo.trim();
+
+        if (!sistema.equalsIgnoreCase("Windows 7")
+                && !sistema.equalsIgnoreCase("Windows 10")
+                && !sistema.equalsIgnoreCase("Windows 11")) {
+            return false;
+        }
+
+        if (Procesador == null) {
+            return false;
+        }
+
+        String procesador = Procesador.trim();
+
+        if (!procesador.equalsIgnoreCase("AMD Ryzen")
+                && !procesador.equalsIgnoreCase("Intel Core i5")) {
             return false;
         }
 
