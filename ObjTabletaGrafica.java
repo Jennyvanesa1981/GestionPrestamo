@@ -40,7 +40,15 @@ public class ObjTabletaGrafica extends ObjEquipos {
             return false;
         }
 
-        if (Almacenamiento == null || Almacenamiento.trim().isEmpty()) {
+        if (Almacenamiento == null) {
+            return false;
+        }
+
+        String almacenamiento = Almacenamiento.trim();
+
+        if (!almacenamiento.equalsIgnoreCase("256 GB")
+                && !almacenamiento.equalsIgnoreCase("512 GB")
+                && !almacenamiento.equalsIgnoreCase("1 TB")) {
             return false;
         }
 
