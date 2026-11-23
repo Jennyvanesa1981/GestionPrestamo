@@ -1,8 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashMap;
-import java.util.HashMap;
 
 public class GestionPrestamo {
 
@@ -246,7 +244,7 @@ public boolean menuIngenieria() {
 
         String serialReal = validaciones.leerTexto(
         "Ingrese serial real del equipo: ");
-            
+
             
             if (!relacionarSerialDiseno(serial, serialReal)) {
         return false;
