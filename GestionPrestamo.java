@@ -756,140 +756,142 @@ public boolean ingresarTabletaGrafica() {
         return true;
         }
 
-
-
-public boolean imprimirInventario() {
+    
+    public boolean imprimirInventario() {
 
         System.out.println("\nINVENTARIO TOTAL");
 
         if (ingenieros.isEmpty() && disenadores.isEmpty()
-                && portatil.isEmpty() && tableta.isEmpty()) {
+            && portatil.isEmpty() && tableta.isEmpty()) {
 
-            System.out.println("No hay registros en el inventario");
-            return false;
-        }
+        System.out.println("No hay registros en el inventario");
+        return false;
+    }
 
         System.out.println("\nESTUDIANTES DE INGENIERIA");
 
         if (ingenieros.isEmpty()) {
 
-            System.out.println("No hay estudiantes de Ingenieria registrados");
+        System.out.println("No hay estudiantes de Ingenieria registrados");
+
         } else {
 
-            for (ObjEstudiantesIngenieria estudiante : ingenieros) {
-
-                System.out.println("-------------------------");
-                System.out.println("Cedula: " + estudiante.getCedula());
-                System.out.println("Nombre: " + estudiante.getNombre() + " " + estudiante.getApellido());
-                System.out.println("Telefono: " + estudiante.getTelefono());
-                System.out.println("Semestre: " + estudiante.getNumeroSemestre());
-                System.out.println("Promedio: " + estudiante.getPromedioAcumulado());
-                System.out.println("Serial equipo: " + estudiante.getSerialEquipo());
-            }
+        for (ObjEstudiantesIngenieria estudiante : ingenieros) {
 
             System.out.println("-------------------------");
-            System.out.println("Total ingenieros: " + ingenieros.size());
+            System.out.println("Cedula: " + estudiante.getCedula());
+            System.out.println("Nombre: " + estudiante.getNombre()
+                    + " " + estudiante.getApellido());
+            System.out.println("Telefono: " + estudiante.getTelefono());
+            System.out.println("Semestre: " + estudiante.getNumeroSemestre());
+            System.out.println("Promedio: " + estudiante.getPromedioAcumulado());
+            System.out.println("Serial equipo: " + estudiante.getSerialEquipo());
+        }
+
+        System.out.println("-------------------------");
+        System.out.println("Total ingenieros: " + ingenieros.size());
         }
 
         System.out.println("\nESTUDIANTES DE DISENO");
 
         if (disenadores.isEmpty()) {
 
-            System.out.println("No hay estudiantes de Diseno registrados");
+        System.out.println("No hay estudiantes de Diseno registrados");
+
         } else {
 
-            for (ObjEstudianteDiseno estudiante : disenadores) {
-
-                System.out.println("-------------------------");
-                System.out.println("Cedula: " + estudiante.getCedula());
-                System.out.println("Nombre: " + estudiante.getNombre() + " " + estudiante.getApellido());
-                System.out.println("Telefono: " + estudiante.getTelefono());
-                System.out.println("Modalidad: " + estudiante.getModalidadEstudio());
-                System.out.println("Asignaturas: " + estudiante.getCantidadAsignaturas());
-                System.out.println("Serial equipo: " + estudiante.getSerialEquipo());
-            }
+        for (ObjEstudianteDiseno estudiante : disenadores) {
 
             System.out.println("-------------------------");
-            System.out.println("Total disenadores: " + disenadores.size());
+            System.out.println("Cedula: " + estudiante.getCedula());
+            System.out.println("Nombre: " + estudiante.getNombre()
+                    + " " + estudiante.getApellido());
+            System.out.println("Telefono: " + estudiante.getTelefono());
+            System.out.println("Modalidad: " + estudiante.getModalidadEstudio());
+            System.out.println("Asignaturas: " + estudiante.getCantidadAsignaturas());
+            System.out.println("Serial equipo: " + estudiante.getSerialEquipo());
+        }
+
+        System.out.println("-------------------------");
+        System.out.println("Total disenadores: " + disenadores.size());
         }
 
         System.out.println("\nCOMPUTADORES PORTATILES");
 
         if (portatil.isEmpty()) {
 
-            System.out.println("No hay computadores portatiles registrados");
+        System.out.println("No hay computadores portatiles registrados");
+
         } else {
 
-            for (ObjComputadorPortatil equipo : portatil) {
-
-                System.out.println("-------------------------");
-                System.out.println("Tipo: " + equipo.getTipoEquipo());
-                System.out.println("Serial: " + equipo.getSerial());
-                System.out.println("Marca: " + equipo.getMarca());
-                System.out.println("Tamano: " + equipo.getTamano());
-                System.out.println("Precio: " + equipo.getPrecio());
-
-            if (equipo instanceof ObjComputadorPortatil) {
-
-                ObjComputadorPortatil computador =
-                    (ObjComputadorPortatil) equipo;
-
-                System.out.println(
-                    "Sistema operativo: " +
-                    computador.getSistemaOperativo()
-                );
-
-                System.out.println(
-                    "Procesador: " +
-                    computador.getProcesador()
-                );
-
-            }
-            }
+        for (ObjComputadorPortatil equipo : portatil) {
 
             System.out.println("-------------------------");
-            System.out.println("Total portatiles: " + portatil.size());
+            System.out.println("Tipo: " + equipo.getTipoEquipo());
+            System.out.println("Serial: " + equipo.getSerial());
+            System.out.println("Marca: " + equipo.getMarca());
+            System.out.println("Tamano: " + equipo.getTamano());
+            System.out.println("Precio: " + equipo.getPrecio());
+            System.out.println("Sistema operativo: " + equipo.getSistemaOperativo());
+            System.out.println("Procesador: " + equipo.getProcesador());
+        }
+
+        System.out.println("-------------------------");
+        System.out.println("Total portatiles: " + portatil.size());
         }
 
         System.out.println("\nTABLETAS GRAFICAS");
 
         if (tableta.isEmpty()) {
 
-            System.out.println("No hay tabletas graficas registradas");
+        System.out.println("No hay tabletas graficas registradas");
+
         } else {
 
-            for (ObjTabletaGrafica equipo : tableta) {
-
-                System.out.println("-------------------------");
-                System.out.println("Tipo: " + equipo.getTipoEquipo());
-                System.out.println("Serial: " + equipo.getSerial());
-                System.out.println("Marca: " + equipo.getMarca());
-                System.out.println("Tamano: " + equipo.getTamano());
-                System.out.println("Precio: " + equipo.getPrecio());
-                System.out.println("Almacenamiento: " + equipo.getAlmacenamiento());
-                System.out.println("Peso: " + equipo.getPeso());
-            }
+        for (ObjTabletaGrafica equipo : tableta) {
 
             System.out.println("-------------------------");
-            System.out.println("Total tabletas: " + tableta.size());
+            System.out.println("Tipo: " + equipo.getTipoEquipo());
+            System.out.println("Serial: " + equipo.getSerial());
+            System.out.println("Marca: " + equipo.getMarca());
+            System.out.println("Tamano: " + equipo.getTamano());
+            System.out.println("Precio: " + equipo.getPrecio());
+            System.out.println("Almacenamiento: " + equipo.getAlmacenamiento());
+            System.out.println("Peso: " + equipo.getPeso());
         }
+
+        System.out.println("-------------------------");
+        System.out.println("Total tabletas: " + tableta.size());
+        }
+
+        System.out.println("\nRESUMEN DEL INVENTARIO");
+        System.out.println("Total estudiantes de Ingenieria: " + ingenieros.size());
+        System.out.println("Total estudiantes de Diseno: " + disenadores.size());
+        System.out.println("Total computadores portatiles: " + portatil.size());
+        System.out.println("Total tabletas graficas: " + tableta.size());
+        System.out.println("Total equipos: " + inventarioEquipos.size());
 
         return true;
     }
+
     public boolean menuInventario() {
-        imprimirInventario();
-        System.out.println("\nGESTION DE INVENTARIO");
-        System.out.println("1. Registrar equipos");
-        System.out.println("2. Volver al menu principal");
-        int opcion = validaciones.leerEntero("Seleccione una opcion: ", 1, 2);
-        if (opcion == 1) {
-            return menuEquipos();
-        }
-        return true;
+
+    imprimirInventario();
+
+    System.out.println("\nGESTION DE INVENTARIO");
+    System.out.println("1. Registrar equipos");
+    System.out.println("2. Volver al menu principal");
+
+    int opcion = validaciones.leerEntero(
+            "Seleccione una opcion: ", 1, 2);
+
+    if (opcion == 1) {
+        return menuEquipos();
     }
 
-
-public ObjEstudiantes buscarPrestamoActivo(
+    return true;
+        }
+    public ObjEstudiantes buscarPrestamoActivo(
         String dato, boolean ingenieria) {
 
     if (dato == null || dato.trim().isEmpty()) {
@@ -937,6 +939,7 @@ public ObjEstudiantes buscarPrestamoActivo(
 
     return null;
 }
+
 
 
 public boolean modificarPrestamo(boolean ingenieria) {
