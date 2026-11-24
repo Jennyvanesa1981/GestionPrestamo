@@ -199,7 +199,7 @@ public boolean menuIngenieria() {
             "Ingrese promedio acumulado (0 a 5): ", 0, 5
         );
 
-        String serial = validaciones.leerTexto(
+        String serial = validaciones.leerSerial(
             "Ingrese serial del equipo: "
         );
 
@@ -255,7 +255,7 @@ public boolean menuIngenieria() {
             "Ingrese serial numerico del equipo: ",
             1, Integer.MAX_VALUE);
 
-        String serialReal = validaciones.leerTexto(
+        String serialReal = validaciones.leerSerial(
         "Ingrese serial real del equipo: ");
 
 
@@ -561,7 +561,7 @@ public boolean menuEquipos() {
 
         System.out.println("\nREGISTRO DE COMPUTADOR PORTATIL");
 
-        String serial = validaciones.leerNombreApellido(
+        String serial = validaciones.leerSerial(
             "Ingrese serial solo con letras: "
         );
 
@@ -599,7 +599,7 @@ public boolean ingresarTabletaGrafica() {
 
         System.out.println("\nREGISTRO DE TABLETA GRAFICA");
 
-        String serial = validaciones.leerNombreApellido(
+        String serial = validaciones.leerSerial(
             "Ingrese serial solo con letras: "
         );
 

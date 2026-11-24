@@ -1,7 +1,8 @@
 
+
 public class ObjEstudiantes {
 
-    private final String Cedula;
+    private String Cedula;
     private String Nombre;
     private String Apellido;
     private String Telefono;
@@ -19,6 +20,9 @@ public class ObjEstudiantes {
         return Cedula;
     }
 
+    public void setCedula(String cedula) {
+        Cedula = cedula;
+    }
 
     public String getNombre() {
         return Nombre;
@@ -46,21 +50,23 @@ public class ObjEstudiantes {
 
     public boolean datosValidos() {
 
-        if (Cedula == null || !Cedula.matches("[0-9]{6,10}")) {
+        if (Cedula == null
+                || !Cedula.trim().matches("[0-9]{6,10}")) {
             return false;
         }
 
-        if (Nombre == null ||
-                !Nombre.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
+        if (Nombre == null
+                || !Nombre.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
             return false;
         }
 
-        if (Apellido == null ||
-                !Apellido.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
+        if (Apellido == null
+                || !Apellido.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
             return false;
         }
 
-        if (Telefono == null || !Telefono.matches("[0-9]{7,10}")) {
+        if (Telefono == null
+                || !Telefono.trim().matches("[0-9]{7,10}")) {
             return false;
         }
 

@@ -1,12 +1,15 @@
 
+
 public abstract class ObjEquipos {
 
-    private final String Serial;
+    private String Serial;
     private String Marca;
     private float Tamano;
     private float Precio;
-    
-    public ObjEquipos(String serial, String marca, float tamano, float precio) {
+
+    public ObjEquipos(String serial, String marca,
+            float tamano, float precio) {
+
         Serial = serial;
         Marca = marca;
         Tamano = tamano;
@@ -17,6 +20,9 @@ public abstract class ObjEquipos {
         return Serial;
     }
 
+    public void setSerial(String serial) {
+        Serial = serial;
+    }
 
     public String getMarca() {
         return Marca;
@@ -46,13 +52,13 @@ public abstract class ObjEquipos {
 
     public boolean datosValidos() {
 
-        if (Serial == null ||
-                !Serial.trim().matches("[\\p{L}]+")) {
+        if (Serial == null
+                || !Serial.trim().matches("[\\p{L}]+")) {
             return false;
         }
 
-        if (Marca == null ||
-                !Marca.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
+        if (Marca == null
+                || !Marca.trim().matches("[\\p{L}]+( [\\p{L}]+)*")) {
             return false;
         }
 

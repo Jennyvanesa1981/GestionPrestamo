@@ -1,9 +1,10 @@
 
+
 public class ObjEstudianteDiseno extends ObjEstudiantes {
 
     private String ModalidadEstudio;
     private int CantidadAsignaturas;
-    private final int SerialEquipo;
+    private int SerialEquipo;
 
     public ObjEstudianteDiseno(String cedula, String nombre,
             String apellido, String telefono, String modalidadEstudio,
@@ -35,6 +36,9 @@ public class ObjEstudianteDiseno extends ObjEstudiantes {
         return SerialEquipo;
     }
 
+    public void setSerialEquipo(int serialEquipo) {
+        SerialEquipo = serialEquipo;
+    }
 
     @Override
     public boolean datosValidos() {
@@ -43,13 +47,13 @@ public class ObjEstudianteDiseno extends ObjEstudiantes {
             return false;
         }
 
-        if (ModalidadEstudio == null ||
-                (!ModalidadEstudio.trim().equalsIgnoreCase("Virtual")
+        if (ModalidadEstudio == null
+                || (!ModalidadEstudio.trim().equalsIgnoreCase("Virtual")
                 && !ModalidadEstudio.trim().equalsIgnoreCase("Presencial"))) {
             return false;
         }
 
-        if (CantidadAsignaturas <= 0) {
+        if (CantidadAsignaturas < 1 || CantidadAsignaturas > 20) {
             return false;
         }
 

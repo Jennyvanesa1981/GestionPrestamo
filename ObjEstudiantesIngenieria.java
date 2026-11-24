@@ -1,9 +1,10 @@
 
+
 public class ObjEstudiantesIngenieria extends ObjEstudiantes {
 
     private int NumeroSemestre;
     private float PromedioAcumulado;
-    private final String SerialEquipo;
+    private String SerialEquipo;
 
     public ObjEstudiantesIngenieria(String cedula, String nombre,
             String apellido, String telefono, int numeroSemestre,
@@ -35,7 +36,9 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
         return SerialEquipo;
     }
 
-   
+    public void setSerialEquipo(String serialEquipo) {
+        SerialEquipo = serialEquipo;
+    }
 
     @Override
     public boolean datosValidos() {
@@ -44,7 +47,7 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
             return false;
         }
 
-        if (NumeroSemestre <= 0) {
+        if (NumeroSemestre < 1 || NumeroSemestre > 20) {
             return false;
         }
 
@@ -54,7 +57,8 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
             return false;
         }
 
-        if (SerialEquipo == null || SerialEquipo.trim().isEmpty()) {
+        if (SerialEquipo == null
+                || !SerialEquipo.trim().matches("[\\p{L}]+")) {
             return false;
         }
 
