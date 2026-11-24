@@ -890,7 +890,8 @@ public boolean ingresarTabletaGrafica() {
     }
 
     return true;
-        }
+    }
+
     public ObjEstudiantes buscarPrestamoActivo(
         String dato, boolean ingenieria) {
 
@@ -939,6 +940,18 @@ public boolean ingresarTabletaGrafica() {
 
     return null;
 }
+
+public ObjEstudiantes buscarPrestamoActivo(String cedula) {
+
+    ObjEstudiantes estudiante = buscarPrestamoActivo(cedula, true);
+
+    if (estudiante != null) {
+        return estudiante;
+    }
+
+    return buscarPrestamoActivo(cedula, false);
+}
+
 
 
 

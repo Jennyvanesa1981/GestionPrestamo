@@ -1,7 +1,7 @@
 
 public class ObjEstudiantes {
 
-    private String Cedula;
+    private final String Cedula;
     private String Nombre;
     private String Apellido;
     private String Telefono;
@@ -15,16 +15,10 @@ public class ObjEstudiantes {
         Telefono = telefono;
     }
 
-    public ObjEstudiantes() {
-    }
-
     public String getCedula() {
         return Cedula;
     }
 
-    public void setCedula(String cedula) {
-        Cedula = cedula;
-    }
 
     public String getNombre() {
         return Nombre;

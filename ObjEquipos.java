@@ -1,7 +1,7 @@
 
 public abstract class ObjEquipos {
 
-    private String Serial;
+    private final String Serial;
     private String Marca;
     private float Tamano;
     private float Precio;
@@ -17,9 +17,6 @@ public abstract class ObjEquipos {
         return Serial;
     }
 
-    public void setSerial(String serial) {
-        Serial = serial;
-    }
 
     public String getMarca() {
         return Marca;

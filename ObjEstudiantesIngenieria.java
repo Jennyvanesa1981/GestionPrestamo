@@ -3,7 +3,7 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
 
     private int NumeroSemestre;
     private float PromedioAcumulado;
-    private String SerialEquipo;
+    private final String SerialEquipo;
 
     public ObjEstudiantesIngenieria(String cedula, String nombre,
             String apellido, String telefono, int numeroSemestre,
@@ -35,9 +35,7 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
         return SerialEquipo;
     }
 
-    public void setSerialEquipo(String serialEquipo) {
-        SerialEquipo = serialEquipo;
-    }
+   
 
     @Override
     public boolean datosValidos() {
