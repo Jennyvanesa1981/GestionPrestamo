@@ -95,7 +95,7 @@ public class Validaciones {
 
         if (!serial.matches("[\\p{L}\\p{N}]+")) {
             System.out.println(
-                    "Error: el serial solamente puede contener letras.");
+                    "Error: el serial solamente puede contener letras y números.");
             return leerSerial(mensaje);
         }
 

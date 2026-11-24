@@ -21,7 +21,17 @@ public class ObjEstudiantes {
     }
 
     public void setCedula(String cedula) {
-        Cedula = cedula;
+
+    if (cedula == null || !cedula.trim().matches("[0-9]{6,10}")) {
+        System.out.println(
+            "Error: la cedula debe tener entre 6 y 10 digitos."
+        );
+        return;
+    }
+
+    Cedula = cedula.trim();
+
+    System.out.println("Cedula actualizada correctamente.");
     }
 
     public String getNombre() {

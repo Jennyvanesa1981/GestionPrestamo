@@ -1,5 +1,4 @@
 
-
 public abstract class ObjEquipos {
 
     private String Serial;
@@ -20,9 +19,26 @@ public abstract class ObjEquipos {
         return Serial;
     }
 
+
     public void setSerial(String serial) {
-        Serial = serial;
+
+    if (serial == null || serial.trim().isEmpty()) {
+        System.out.println("Error: el serial no puede estar vacio.");
+        return;
     }
+
+    if (!serial.trim().matches("[\\p{L}\\p{N}]+")) {
+        System.out.println(
+            "Error: el serial solo permite letras y numeros."
+        );
+        return;
+    }
+
+    Serial = serial.trim();
+
+    System.out.println("Serial actualizado correctamente.");
+    }
+
 
     public String getMarca() {
         return Marca;
@@ -53,7 +69,7 @@ public abstract class ObjEquipos {
     public boolean datosValidos() {
 
         if (Serial == null
-                || !Serial.trim().matches("[\\p{L}]+")) {
+        || !Serial.trim().matches("[\\p{L}\\p{N}]+")) {
             return false;
         }
 

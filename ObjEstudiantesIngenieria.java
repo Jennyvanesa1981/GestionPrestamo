@@ -36,9 +36,23 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
         return SerialEquipo;
     }
 
+
     public void setSerialEquipo(String serialEquipo) {
-        SerialEquipo = serialEquipo;
+
+    if (serialEquipo == null
+            || !serialEquipo.trim().matches("[\\p{L}\\p{N}]+")) {
+
+        System.out.println(
+            "Error: el serial debe contener solamente letras y numeros."
+        );
+        return;
     }
+
+    SerialEquipo = serialEquipo.trim();
+
+    System.out.println("Serial del equipo actualizado correctamente.");
+    }
+
 
     @Override
     public boolean datosValidos() {
@@ -58,7 +72,7 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
         }
 
         if (SerialEquipo == null
-                || !SerialEquipo.trim().matches("[\\p{L}]+")) {
+        || !SerialEquipo.trim().matches("[\\p{L}\\p{N}]+")) {
             return false;
         }
 

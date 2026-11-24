@@ -1,5 +1,4 @@
 
-
 public class ObjEstudianteDiseno extends ObjEstudiantes {
 
     private String ModalidadEstudio;
@@ -36,9 +35,21 @@ public class ObjEstudianteDiseno extends ObjEstudiantes {
         return SerialEquipo;
     }
 
+
     public void setSerialEquipo(int serialEquipo) {
-        SerialEquipo = serialEquipo;
+
+    if (serialEquipo <= 0) {
+        System.out.println(
+            "Error: el serial numerico debe ser mayor que cero."
+        );
+        return;
     }
+
+    SerialEquipo = serialEquipo;
+
+    System.out.println("Serial del equipo actualizado correctamente.");
+    }
+
 
     @Override
     public boolean datosValidos() {

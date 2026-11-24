@@ -130,7 +130,7 @@ public boolean menuIngenieria() {
         int opcion;
 
         do {
-            System.out.println("\nSUBMENU DE DISENO");
+            System.out.println("\nSUBMENU DE DISEÑO");
             System.out.println("1. Registrar prestamo");
             System.out.println("2. Modificar prestamo por serial o cedula");
             System.out.println("3. Devolucion de equipo");
@@ -171,113 +171,183 @@ public boolean menuIngenieria() {
 
         return true;
     }
-    public boolean ingresarEstudianteIngenieria() {
 
-        System.out.println("\nREGISTRO DE ESTUDIANTE DE INGENIERIA");
+public boolean ingresarEstudianteIngenieria() {
 
-        String cedula = validaciones.leerCedula(
-            "Ingrese cedula: "
+    System.out.println(" REGISTRO DE ESTUDIANTE DE INGENIERIA");
+
+    System.out.println("\n1. DATOS PERSONALES");
+
+    System.out.println("Ingrese Cedula: entre 6 y 10 digitos.");
+    String cedula = validaciones.leerCedula(
+        "Ingreso cedula: "
+    );
+
+    System.out.println("\nNombre: utilice solamente letras.");
+    String nombre = validaciones.leerNombreApellido(
+        "Ingreso nombre: "
+    );
+
+    System.out.println("\nApellido: utilice solamente letras.");
+    String apellido = validaciones.leerNombreApellido(
+        "Ingreso apellido: "
+    );
+
+    System.out.println("\nTelefono: entre 7 y 10 digitos.");
+    String telefono = validaciones.leerTelefono(
+        "Ingreso telefono: "
+    );
+
+    System.out.println("\n2. DATOS ACADEMICOS");
+
+    System.out.println("Semestre: ingrese un numero entre 1 y 20.");
+    int semestre = validaciones.leerEntero(
+        "Ingreso numero de semestre: ", 1, 20
+    );
+
+    System.out.println("Promedio: ingrese un valor entre 0 y 5.");
+    float promedio = validaciones.leerDecimal(
+        "Ingreso promedio acumulado: ", 0, 5
+    );
+
+    System.out.println("\n3. DATOS DEL EQUIPO");
+
+    System.out.println("Ingrese el serial del equipo.");
+    String serial = validaciones.leerSerial(
+        "Ingreso serial: "
+    );
+
+    System.out.println("\n4. VERIFICANDO INFORMACION...");
+
+    ObjEstudiantesIngenieria estudiante =
+        new ObjEstudiantesIngenieria(
+            cedula,
+            nombre,
+            apellido,
+            telefono,
+            semestre,
+            promedio,
+            serial
         );
 
-        String nombre = validaciones.leerNombreApellido(
-            "Ingrese nombre: "
-        );
+    boolean registrado =
+        registrarEstudianteIngenieria(estudiante);
 
-        String apellido = validaciones.leerNombreApellido(
-            "Ingrese apellido: "
-        );
+    if (registrado) {
 
-        String telefono = validaciones.leerTelefono(
-            "Ingrese telefono: "
-        );
+        System.out.println("ESTUDIANTE REGISTRADO CORRECTAMENTE");
 
-        int semestre = validaciones.leerEntero(
-            "Ingrese numero de semestre: ", 1, 20
-        );
-
-        float promedio = validaciones.leerDecimal(
-            "Ingrese promedio acumulado (0 a 5): ", 0, 5
-        );
-
-        String serial = validaciones.leerSerial(
-            "Ingrese serial del equipo: "
-        );
-
-        ObjEstudiantesIngenieria estudiante =
-            new ObjEstudiantesIngenieria(
-                cedula, nombre, apellido, telefono,
-                semestre, promedio, serial
-            );
-
-        return registrarEstudianteIngenieria(estudiante);
+    } else {
+        System.out.println("\nNo fue posible registrar el prestamo.");
+        System.out.println("Verifique los datos y la disponibilidad.");
     }
+
+    return registrado;
+    }
+
+
+
     public boolean ingresarEstudianteDiseno() {
 
-        System.out.println("\nREGISTRO DE ESTUDIANTE DE DISENO");
+    System.out.println(" REGISTRO DE ESTUDIANTE DE DISENO");
 
-        String cedula = validaciones.leerCedula(
-            "Ingrese cedula: "
-        );
+    System.out.println("\n1. DATOS PERSONALES");
 
-        String nombre = validaciones.leerNombreApellido(
-            "Ingrese nombre: "
-        );
-
-        String apellido = validaciones.leerNombreApellido(
-            "Ingrese apellido: "
-        );
-
-        String telefono = validaciones.leerTelefono(
-            "Ingrese telefono: "
-        );
-
-        System.out.println("\nMODALIDAD DE ESTUDIO");
-        System.out.println("1. Virtual");
-        System.out.println("2. Presencial");
-
-        int opcionModalidad = validaciones.leerEntero(
-            "Seleccione modalidad: ", 1, 2
-        );
-
-        String modalidad;
-
-        if (opcionModalidad == 1) {
-            modalidad = "Virtual";
-        } else {
-            modalidad = "Presencial";
-        }
-
-        int asignaturas = validaciones.leerEntero(
-            "Ingrese cantidad de asignaturas: ", 1, 20
-        );
-
-        int serial = validaciones.leerEntero(
-            "Ingrese serial numerico del equipo: ",
-            1, Integer.MAX_VALUE);
-
-        String serialReal = validaciones.leerSerial(
-        "Ingrese serial real del equipo: ");
+    System.out.println("Cedula: ingrese entre 6 y 10 digitos.");
+    String cedula = validaciones.leerCedula(
+        "Ingreso cedula: ");
 
 
-            if (!relacionarSerialDiseno(serial, serialReal)) {
+    System.out.println("\nNombre: utilice solamente letras.");
+    String nombre = validaciones.leerNombreApellido(
+        "Ingreso nombre: ");
+
+    System.out.println("\nApellido: utilice solamente letras.");
+    String apellido = validaciones.leerNombreApellido(
+        "Ingreso apellido: ");
+
+
+    System.out.println("\nTelefono: ingrese entre 7 y 10 digitos.");
+    String telefono = validaciones.leerTelefono(
+        "Ingreso telefono: ");
+
+
+    System.out.println("\n2. MODALIDAD DE ESTUDIO");
+    System.out.println("Seleccione una modalidad:");
+    System.out.println("1. Virtual");
+    System.out.println("2. Presencial");
+
+    int opcionModalidad = validaciones.leerEntero(
+        "Seleccione modalidad: ", 1, 2
+    );
+
+    String modalidad;
+
+    if (opcionModalidad == 1) {
+        modalidad = "Virtual";
+    } else {
+        modalidad = "Presencial";
+    }
+
+    System.out.println("\nModalidad seleccionada: " + modalidad);
+
+    System.out.println("\n3. DATOS ACADEMICOS");
+
+    System.out.println("Cantidad de asignaturas: ingrese entre 1 y 20.");
+    int asignaturas = validaciones.leerEntero(
+        "Ingrese cantidad de asignaturas: ", 1, 20
+    );
+
+    System.out.println("\n4. DATOS DEL EQUIPO");
+
+    System.out.println("Ingrese un numero de identificacion positivo.");
+    int serial = validaciones.leerEntero(
+        "Ingrese serial numerico del equipo: ",
+        1, Integer.MAX_VALUE
+    );
+
+    System.out.println("\nIngrese el serial real del equipo.");
+    String serialReal = validaciones.leerSerial(
+        "Ingrese serial real: "
+    );
+
+    System.out.println("\n5. VERIFICANDO RELACION DE SERIALES...");
+
+    if (!relacionarSerialDiseno(serial, serialReal)) {
+        System.out.println("No fue posible relacionar los seriales.");
         return false;
-        }
+    }
 
+    ObjEstudianteDiseno estudiante =
+        new ObjEstudianteDiseno(
+            cedula,
+            nombre,
+            apellido,
+            telefono,
+            modalidad,
+            asignaturas,
+            serial
+        );
 
-        ObjEstudianteDiseno estudiante =
-            new ObjEstudianteDiseno(
-                cedula, nombre, apellido, telefono,
-                modalidad, asignaturas, serial);
+    boolean registrado = registrarEstudianteDiseno(estudiante);
 
-            boolean registrado = registrarEstudianteDiseno(estudiante);
-            if (!registrado) {
-                serialesDiseno.remove(serial);
+    if (!registrado) {
+        serialesDiseno.remove(serial);
+
+        System.out.println("\nNo fue posible registrar el prestamo.");
+        System.out.println("Verifique los datos y la disponibilidad del equipo.");
+
         return false;
+    }
+
+    System.out.println("ESTUDIANTE DE DISENO REGISTRADO");
+    System.out.println("CORRECTAMENTE");
+
+
+    return true;
 }
 
-return true;
 
-    }
 
 
 public boolean registrarEstudianteIngenieria(
@@ -444,7 +514,7 @@ public boolean registrarEstudianteDiseno(
 
         return false;
     }
-public boolean menuEquipos() {
+    public boolean menuEquipos() {
 
         int opcion;
 
@@ -557,85 +627,139 @@ public boolean menuEquipos() {
         }
     }
 
+
     public boolean ingresarComputadorPortatil() {
 
-        System.out.println("\nREGISTRO DE COMPUTADOR PORTATIL");
+    System.out.println(" REGISTRO DE COMPUTADOR PORTATIL");
 
-        String serial = validaciones.leerSerial(
-            "Ingrese serial solo con letras: "
+
+    System.out.println("\n1. IDENTIFICACION DEL EQUIPO");
+
+    System.out.println("Serial: utilice letras y numeros, sin espacios.");
+    String serial = validaciones.leerSerial(
+        "Ingreso serial del computador: "
+    );
+
+    System.out.println("\n2. CARACTERISTICAS DEL EQUIPO");
+
+    System.out.println("Marca: ingrese el nombre de la marca.");
+    String marca = validaciones.leerNombreApellido(
+        "Ingreso marca: "
+    );
+
+    System.out.println("Tamano: ingrese un valor numerico mayor que cero.");
+    float tamano = validaciones.leerDecimal(
+        "Ingreso tamano en pulgadas: ", 0.1f, 100
+    );
+
+    System.out.println("Precio: ingrese un valor numerico mayor que cero.");
+    float precio = validaciones.leerDecimal(
+        "Ingreso precio: ", 0.1f, Float.MAX_VALUE
+    );
+
+    System.out.println("\n3. SISTEMA OPERATIVO");
+
+    String sistemaOperativo = seleccionarSistemaOperativo();
+
+    System.out.println("\n4. PROCESADOR");
+
+    String procesador = seleccionarProcesador();
+
+    System.out.println("\n5. VERIFICANDO INFORMACION...");
+
+    ObjComputadorPortatil computador =
+        new ObjComputadorPortatil(
+            serial,
+            marca,
+            tamano,
+            precio,
+            sistemaOperativo,
+            procesador
         );
 
-        String marca = validaciones.leerNombreApellido(
-            "Ingrese marca: "
-        );
+    boolean registrado = registrarEquipoInventario(computador);
 
-        float tamano = validaciones.leerDecimal(
-            "Ingrese tamano en pulgadas: ",
-            0.01f, Float.MAX_VALUE
-        );
+    if (registrado) {
 
-        float precio = validaciones.leerDecimal(
-            "Ingrese precio: ",
-            0.01f, Float.MAX_VALUE
-        );
+        System.out.println("COMPUTADOR PORTATIL REGISTRADO");
+        System.out.println("CORRECTAMENTE");
 
-        String sistemaOperativo = seleccionarSistemaOperativo();
-
-        String procesador = seleccionarProcesador();
-
-        ObjComputadorPortatil computador =
-            new ObjComputadorPortatil(
-                serial,
-                marca,
-                tamano,
-                precio,
-                sistemaOperativo,
-                procesador
-            );
-
-        return registrarEquipoInventario(computador);
+    } else {
+        System.out.println("\nNo fue posible registrar el computador.");
+        System.out.println("Verifique los datos y el serial.");
     }
+
+    return registrado;
+    }
+
+
 public boolean ingresarTabletaGrafica() {
+    System.out.println(" REGISTRO DE TABLETA GRAFICA");
 
-        System.out.println("\nREGISTRO DE TABLETA GRAFICA");
 
-        String serial = validaciones.leerSerial(
-            "Ingrese serial solo con letras: "
+    System.out.println("\n1. IDENTIFICACION DEL EQUIPO");
+
+    System.out.println("Serial: utilice letras y numeros, sin espacios.");
+    String serial = validaciones.leerSerial(
+        "Ingrese serial de la tableta: "
+    );
+
+    System.out.println("\n2. CARACTERISTICAS DEL EQUIPO");
+
+    System.out.println("Marca: ingrese el nombre de la marca.");
+    String marca = validaciones.leerNombreApellido(
+        "Ingrese marca: "
+    );
+
+    System.out.println("Tamano: ingrese un valor numerico mayor que cero.");
+    float tamano = validaciones.leerDecimal(
+        "Ingrese tamano en pulgadas: ", 0.1f, 100
+    );
+
+    System.out.println("Precio: ingrese un valor numerico mayor que cero.");
+    float precio = validaciones.leerDecimal(
+        "Ingrese precio: ", 0.1f, Float.MAX_VALUE
+    );
+
+    System.out.println("\n3. ALMACENAMIENTO");
+
+    String almacenamiento = seleccionarAlmacenamiento();
+
+    System.out.println("\n4. PESO");
+
+    System.out.println("Ingrese el peso en kilogramos.");
+    float peso = validaciones.leerDecimal(
+        "Ingrese peso: ", 0.01f, 100
+    );
+
+    System.out.println("\n5. VERIFICANDO INFORMACION...");
+
+    ObjTabletaGrafica tableta =
+        new ObjTabletaGrafica(
+            serial,
+            marca,
+            tamano,
+            precio,
+            almacenamiento,
+            peso
         );
 
-        String marca = validaciones.leerNombreApellido(
-            "Ingrese marca: "
-        );
+    boolean registrado = registrarEquipoInventario(tableta);
 
-        float tamano = validaciones.leerDecimal(
-            "Ingrese tamano en pulgadas: ",
-            0.01f, Float.MAX_VALUE
-        );
-
-        float precio = validaciones.leerDecimal(
-            "Ingrese precio: ",
-            0.01f, Float.MAX_VALUE
-        );
-
-        String almacenamiento = seleccionarAlmacenamiento();
-
-        float peso = validaciones.leerDecimal(
-            "Ingrese peso en kilogramos: ",
-            0.01f, Float.MAX_VALUE
-        );
-
-        ObjTabletaGrafica tableta =
-            new ObjTabletaGrafica(
-                serial,
-                marca,
-                tamano,
-                precio,
-                almacenamiento,
-                peso
-            );
-
-        return registrarEquipoInventario(tableta);
+    if (registrado) {
+        System.out.println("\n====================================");
+        System.out.println("TABLETA GRAFICA REGISTRADA");
+        System.out.println("CORRECTAMENTE");
+        System.out.println("====================================");
+    } else {
+        System.out.println("\nNo fue posible registrar la tableta.");
+        System.out.println("Verifique los datos y el serial.");
     }
+
+    return registrado;
+    }
+
+
 
     public boolean serialAsignado(String serial) {
 
@@ -756,7 +880,7 @@ public boolean ingresarTabletaGrafica() {
         return true;
         }
 
-    
+
     public boolean imprimirInventario() {
 
         System.out.println("\nINVENTARIO TOTAL");
