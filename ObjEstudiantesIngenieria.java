@@ -58,8 +58,8 @@ public class ObjEstudiantesIngenieria extends ObjEstudiantes {
         }
 
         if (SerialEquipo == null
-                || !SerialEquipo.trim().matches("[\\p{L}]+")) {
-            return false;
+        || !SerialEquipo.trim().matches("[\\p{L}\\p{N}]+")) {
+        return false;
         }
 
         return true;

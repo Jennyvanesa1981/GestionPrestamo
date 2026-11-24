@@ -11,7 +11,7 @@ public class Validaciones {
 
     public int leerEntero(String mensaje, int minimo, int maximo) {
 
-        System.out.print(mensaje);
+        System.out.println(mensaje);
         String entrada = sc.nextLine().trim();
 
         if (entrada.isEmpty()) {
@@ -39,7 +39,8 @@ public class Validaciones {
 
     public float leerDecimal(String mensaje, float minimo, float maximo) {
 
-        System.out.print(mensaje);
+        System.out.println(mensaje);
+
         String entrada = sc.nextLine().trim().replace(',', '.');
 
         if (entrada.isEmpty()) {
@@ -72,7 +73,8 @@ public class Validaciones {
 
     public String leerTexto(String mensaje) {
 
-        System.out.print(mensaje);
+        System.out.println(mensaje);
+
         String texto = sc.nextLine().trim();
 
         if (texto.isEmpty()) {
@@ -85,7 +87,8 @@ public class Validaciones {
 
     public String leerSerial(String mensaje) {
 
-        System.out.print(mensaje);
+        System.out.println(mensaje);
+
         String serial = sc.nextLine().trim();
 
         if (serial.isEmpty()) {
@@ -95,7 +98,7 @@ public class Validaciones {
 
         if (!serial.matches("[\\p{L}\\p{N}]+")) {
             System.out.println(
-                    "Error: el serial solamente puede contener letras.");
+                    "Error: el serial solamente puede contener letras y numeros.");
             return leerSerial(mensaje);
         }
 
@@ -132,7 +135,8 @@ public class Validaciones {
 
     public String leerNombreApellido(String mensaje) {
 
-        System.out.print(mensaje);
+        System.out.println(mensaje);
+
         String texto = sc.nextLine().trim();
 
         if (texto.isEmpty()) {

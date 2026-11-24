@@ -52,9 +52,9 @@ public abstract class ObjEquipos {
 
     public boolean datosValidos() {
 
-        if (Serial == null
-                || !Serial.trim().matches("[\\p{L}]+")) {
-            return false;
+       if (Serial == null
+        || !Serial.trim().matches("[\\p{L}\\p{N}]+")) {
+        return false;
         }
 
         if (Marca == null

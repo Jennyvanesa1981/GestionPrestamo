@@ -562,7 +562,7 @@ public boolean menuEquipos() {
         System.out.println("\nREGISTRO DE COMPUTADOR PORTATIL");
 
         String serial = validaciones.leerSerial(
-            "Ingrese serial solo con letras: "
+            "Ingrese serial: "
         );
 
         String marca = validaciones.leerNombreApellido(

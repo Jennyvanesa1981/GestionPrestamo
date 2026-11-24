@@ -36,33 +36,40 @@ public class ObjComputadorPortatil extends ObjEquipos {
     @Override
     public boolean datosValidos() {
 
-        if (!super.datosValidos()) {
-            return false;
-        }
+    if (!super.datosValidos()) {
+        System.out.println("Error en serial, marca, tamano o precio.");
+        return false;
+    }
 
-        if (SistemaOperativo == null) {
-            return false;
-        }
+    if (SistemaOperativo == null) {
+        System.out.println("Error: sistema operativo vacio.");
+        return false;
+    }
 
-        String sistema = SistemaOperativo.trim();
+    String sistema = SistemaOperativo.trim();
 
-        if (!sistema.equalsIgnoreCase("Windows 7")
-                && !sistema.equalsIgnoreCase("Windows 10")
-                && !sistema.equalsIgnoreCase("Windows 11")) {
-            return false;
-        }
+    if (!sistema.equalsIgnoreCase("Windows 7")
+            && !sistema.equalsIgnoreCase("Windows 10")
+            && !sistema.equalsIgnoreCase("Windows 11")) {
 
-        if (Procesador == null) {
-            return false;
-        }
+        System.out.println("Error: sistema operativo invalido.");
+        return false;
+    }
 
-        String procesador = Procesador.trim();
+    if (Procesador == null) {
+        System.out.println("Error: procesador vacio.");
+        return false;
+    }
 
-        if (!procesador.equalsIgnoreCase("AMD Ryzen")
-                && !procesador.equalsIgnoreCase("Intel Core i5")) {
-            return false;
-        }
+    String procesador = Procesador.trim();
 
-        return true;
+    if (!procesador.equalsIgnoreCase("AMD Ryzen")
+            && !procesador.equalsIgnoreCase("Intel Core i5")) {
+
+        System.out.println("Error: procesador invalido.");
+        return false;
+    }
+
+    return true;
     }
 }
