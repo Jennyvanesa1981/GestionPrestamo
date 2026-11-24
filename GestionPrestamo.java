@@ -18,6 +18,8 @@ private ArrayList<ObjEstudianteDiseno> estudiantesDiseno;
 private ArrayList<ObjEquipos> inventarioEquipos;
 private ArrayList<String> prestamosActivos;
 private HashMap<Integer, String> serialesDiseno;
+private ColaPrestamos colaPrestamos;
+private PilaDevoluciones pilaDevoluciones;
 
 
 public GestionPrestamo() {
@@ -34,6 +36,8 @@ public GestionPrestamo() {
     inventarioEquipos = new ArrayList<>();
     prestamosActivos = new ArrayList<>();
     serialesDiseno = new HashMap<>();
+    colaPrestamos = new ColaPrestamos();
+    pilaDevoluciones = new PilaDevoluciones();
 }
 
      public boolean mostrarMenuPrincipal() {
@@ -211,6 +215,7 @@ public boolean menuIngenieria() {
 
         return registrarEstudianteIngenieria(estudiante);
     }
+    
     public boolean ingresarEstudianteDiseno() {
 
         System.out.println("\nREGISTRO DE ESTUDIANTE DE DISENO");
@@ -273,14 +278,14 @@ public boolean menuIngenieria() {
             if (!registrado) {
                 serialesDiseno.remove(serial);
         return false;
-}
+        }
 
-return true;
+    return true;
 
     }
 
 
-public boolean registrarEstudianteIngenieria(
+    public boolean registrarEstudianteIngenieria(
         ObjEstudiantesIngenieria estudiante) {
 
     if (estudiante == null || !estudiante.datosValidos()) {
@@ -297,8 +302,10 @@ public boolean registrarEstudianteIngenieria(
     boolean equipoPrestado = false;
 
     for (ObjEquipos equipo : inventarioEquipos) {
+
         if (equipo.getSerial().equalsIgnoreCase(
                 estudiante.getSerialEquipo())) {
+
             equipoExiste = true;
             break;
         }
@@ -310,45 +317,63 @@ public boolean registrarEstudianteIngenieria(
     }
 
     for (ObjEstudiantesIngenieria registrado : estudiantesIngenieria) {
+
         if (prestamosActivos.contains(registrado.getCedula())
                 && registrado.getSerialEquipo().equalsIgnoreCase(
                     estudiante.getSerialEquipo())) {
+
             equipoPrestado = true;
             break;
         }
     }
 
-   for (ObjEstudianteDiseno registrado : estudiantesDiseno) {
+    for (ObjEstudianteDiseno registrado : estudiantesDiseno) {
 
-    String serialReal = serialesDiseno.get(
-        registrado.getSerialEquipo()
-    );
+        String serialReal = serialesDiseno.get(
+            registrado.getSerialEquipo()
+        );
 
-    if (prestamosActivos.contains(registrado.getCedula())
-            && serialReal != null
-            && serialReal.equalsIgnoreCase(
-                estudiante.getSerialEquipo())) {
+        if (prestamosActivos.contains(registrado.getCedula())
+                && serialReal != null
+                && serialReal.equalsIgnoreCase(
+                    estudiante.getSerialEquipo())) {
 
-        equipoPrestado = true;
-        break;
+            equipoPrestado = true;
+            break;
+        }
     }
-}
 
     if (equipoPrestado) {
-        System.out.println("El equipo ya se encuentra prestado");
-        return false;
+
+        ObjSolicitudPrestamo solicitud =
+            new ObjSolicitudPrestamo(
+                estudiante,
+                estudiante.getSerialEquipo(),
+                true
+            );
+
+        boolean agregado = colaPrestamos.agregarSolicitud(solicitud);
+
+        if (agregado) {
+            System.out.println("El equipo esta prestado");
+            System.out.println("Solicitud agregada a la cola de espera");
+        } else {
+            System.out.println("No se pudo agregar la solicitud");
+        }
+
+        return agregado;
     }
 
     estudiantesIngenieria.add(estudiante);
     prestamosActivos.add(estudiante.getCedula());
 
     System.out.println("Prestamo de Ingenieria registrado correctamente");
+
     return true;
-}
+    }
 
 
-
-public boolean registrarEstudianteDiseno(
+    public boolean registrarEstudianteDiseno(
         ObjEstudianteDiseno estudiante) {
 
     if (estudiante == null || !estudiante.datosValidos()) {
@@ -371,6 +396,7 @@ public boolean registrarEstudianteDiseno(
     }
 
     boolean equipoExiste = false;
+    boolean equipoPrestado = false;
 
     for (ObjEquipos equipo : inventarioEquipos) {
 
@@ -390,8 +416,8 @@ public boolean registrarEstudianteDiseno(
         if (prestamosActivos.contains(registrado.getCedula())
                 && registrado.getSerialEquipo().equalsIgnoreCase(serialReal)) {
 
-            System.out.println("El equipo ya se encuentra prestado");
-            return false;
+            equipoPrestado = true;
+            break;
         }
     }
 
@@ -406,10 +432,31 @@ public boolean registrarEstudianteDiseno(
             if (otroSerial != null
                     && otroSerial.equalsIgnoreCase(serialReal)) {
 
-                System.out.println("El equipo ya se encuentra prestado");
-                return false;
+                equipoPrestado = true;
+                break;
             }
         }
+    }
+
+    if (equipoPrestado) {
+
+        ObjSolicitudPrestamo solicitud =
+            new ObjSolicitudPrestamo(
+                estudiante,
+                serialReal,
+                false
+            );
+
+        boolean agregado = colaPrestamos.agregarSolicitud(solicitud);
+
+        if (agregado) {
+            System.out.println("El equipo esta prestado");
+            System.out.println("Solicitud agregada a la cola de espera");
+        } else {
+            System.out.println("No se pudo agregar la solicitud");
+        }
+
+        return agregado;
     }
 
     estudiantesDiseno.add(estudiante);
@@ -418,7 +465,7 @@ public boolean registrarEstudianteDiseno(
     System.out.println("Prestamo de Diseno registrado correctamente");
 
     return true;
-}
+    }
 
 
 
@@ -595,7 +642,9 @@ public boolean menuEquipos() {
 
         return registrarEquipoInventario(computador);
     }
-public boolean ingresarTabletaGrafica() {
+
+
+    public boolean ingresarTabletaGrafica() {
 
         System.out.println("\nREGISTRO DE TABLETA GRAFICA");
 
@@ -1022,11 +1071,10 @@ public boolean modificarPrestamo(boolean ingenieria) {
     } while (opcion != 4);
 
     return true;
-}
+    }
 
 
-
-public boolean devolverEquipo(boolean ingenieria) {
+    public boolean devolverEquipo(boolean ingenieria) {
 
     System.out.println("\nDEVOLUCION DE EQUIPO");
 
@@ -1044,19 +1092,29 @@ public boolean devolverEquipo(boolean ingenieria) {
     }
 
     String cedula = estudiante.getCedula();
+    String serialEquipo;
 
     boolean eliminado;
 
     if (ingenieria) {
 
+        ObjEstudiantesIngenieria estudianteIngenieria =
+            (ObjEstudiantesIngenieria) estudiante;
+
+        serialEquipo = estudianteIngenieria.getSerialEquipo();
+
         eliminado = estudiantesIngenieria.remove(
-            (ObjEstudiantesIngenieria) estudiante
+            estudianteIngenieria
         );
 
     } else {
 
         ObjEstudianteDiseno estudianteDiseno =
             (ObjEstudianteDiseno) estudiante;
+
+        serialEquipo = serialesDiseno.get(
+            estudianteDiseno.getSerialEquipo()
+        );
 
         eliminado = estudiantesDiseno.remove(estudianteDiseno);
 
@@ -1072,15 +1130,24 @@ public boolean devolverEquipo(boolean ingenieria) {
 
     prestamosActivos.remove(cedula);
 
+    pilaDevoluciones.registrarDevolucion(estudiante);
+
     System.out.println("Devolucion registrada correctamente");
     System.out.println("Cedula: " + cedula);
-    System.out.println("El registro del prestamo fue eliminado");
-    System.out.println("El equipo vuelve a estar disponible");
+
+    boolean atendido = atenderSolicitudPendiente(serialEquipo);
+
+    if (atendido) {
+        System.out.println("El equipo fue asignado al siguiente estudiante");
+    } else {
+        System.out.println("El equipo queda disponible");
+    }
 
     return true;
-}
+    }
 
-public boolean buscarEquipo() {
+
+    public boolean buscarEquipo() {
 
     System.out.println("\nBUSCAR EQUIPO");
 
@@ -1200,10 +1267,10 @@ public boolean buscarEquipo() {
 
     System.out.println("Equipo no encontrado en el inventario");
     return false;
-}
+    }
 
 
-public boolean relacionarSerialDiseno(
+    public boolean relacionarSerialDiseno(
         int serialNumerico, String serialEquipo) {
 
     if (serialNumerico <= 0 || serialEquipo == null
@@ -1248,7 +1315,79 @@ public boolean relacionarSerialDiseno(
 
     System.out.println("Seriales relacionados correctamente");
     return true;
+    }
+
+
+
+    public boolean atenderSolicitudPendiente(String serialEquipo) {
+
+    if (serialEquipo == null || serialEquipo.trim().isEmpty()) {
+        return false;
+    }
+
+    ObjSolicitudPrestamo solicitud =
+        colaPrestamos.atenderSolicitud(serialEquipo);
+
+    if (solicitud == null) {
+        return false;
+    }
+
+    ObjEstudiantes estudiante = solicitud.getEstudiante();
+
+    if (estudiante == null || !estudiante.datosValidos()) {
+        return false;
+    }
+
+    if (prestamosActivos.contains(estudiante.getCedula())) {
+        return false;
+    }
+
+    if (solicitud.isIngenieria()) {
+
+        if (!(estudiante instanceof ObjEstudiantesIngenieria)) {
+            return false;
+        }
+
+        ObjEstudiantesIngenieria ingeniero =
+            (ObjEstudiantesIngenieria) estudiante;
+
+        if (!ingeniero.getSerialEquipo().equalsIgnoreCase(serialEquipo)) {
+            return false;
+        }
+
+        estudiantesIngenieria.add(ingeniero);
+
+    } else {
+
+        if (!(estudiante instanceof ObjEstudianteDiseno)) {
+            return false;
+        }
+
+        ObjEstudianteDiseno disenador =
+            (ObjEstudianteDiseno) estudiante;
+
+        if (disenador.getSerialEquipo() <= 0) {
+            return false;
+        }
+
+        serialesDiseno.put(
+            disenador.getSerialEquipo(), serialEquipo
+        );
+
+        estudiantesDiseno.add(disenador);
+    }
+
+    prestamosActivos.add(estudiante.getCedula());
+
+    System.out.println("Solicitud pendiente atendida correctamente");
+    System.out.println("Estudiante: " + estudiante.getNombre());
+    System.out.println("Cedula: " + estudiante.getCedula());
+    System.out.println("Equipo asignado: " + serialEquipo);
+
+    return true;
 }
+
+
 
 
 }
